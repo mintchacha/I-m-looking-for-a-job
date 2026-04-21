@@ -11,8 +11,6 @@ public class UnitMove2D : MonoBehaviour
 
     [Header("이동속도")]
     public float moveSpeed = 5f;
-    public float chaseDistance = 2f;
-
 
 
     private void Awake()

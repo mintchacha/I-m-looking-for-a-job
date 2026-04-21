@@ -25,19 +25,25 @@ public class EnemySpawner : MonoBehaviour
         // 스폰 시작시간으로부터 라운드 
         if (EnemyQueue.Count > 0)
         {
+            Debug.Log(gameObject + "| 남은 대기열 수 : " + EnemyQueue.Count);
             GameObject newEnemy = EnemyQueue.Dequeue();            
             Vector2 spawnPosition = new Vector2(transform.position.x, transform.position.y);
             GameObject enemy = Instantiate(newEnemy, spawnPosition, Quaternion.identity);
             enemy.GetComponentInChildren<UnitChase>().Initialize(target);
 
-            Debug.Log(this + " : " + EnemyQueue.Count + "몬스터존재" );
-            Invoke("EnemySpawn", spawnerTime);
+            //스폰된 적 정보
+            UnitStat enemyStat = newEnemy.GetComponent<UnitStat>();
+            if (enemyStat == null) Debug.Log(enemy + "에 UnitStat를 찾을 수 없습니다.");
+            if (enemyStat.name == "EliteEnemy") Debug.Log("엘리트 몬스터 등장!");
+            else { Debug.Log(enemyStat.name + "스폰"); }
+
+            //Invoke("EnemySpawn", spawnerTime);
         }
         else 
         {
-            //Destroy(gameObject);
+            Debug.Log("스폰 종료 대기열 : " + EnemyQueue.Count);
         }
-
+        Invoke("EnemySpawn", spawnerTime);
 
     }
 }

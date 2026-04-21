@@ -54,7 +54,7 @@ MonoBehaviour:
   waveList:
   - waveId: "1 \uC6E8\uC774\uBE0C"
     normalEnemy:
-      spawn: 7
+      spawn: 5
       enemyPrefab: {fileID: 6277088575349943330, guid: d4c5b02ad50fa9444a148d101d924a5c, type: 3}
     eliteEnemy:
       spawn: 0
@@ -68,7 +68,7 @@ MonoBehaviour:
       enemyPrefab: {fileID: 6277088575349943330, guid: d4c5b02ad50fa9444a148d101d924a5c, type: 3}
     eliteEnemy:
       spawn: 1
-      enemyPrefab: {fileID: 0}
+      enemyPrefab: {fileID: 6277088575349943330, guid: 1db9d058f67ad074ba7086ffb6bd607b, type: 3}
     boss:
       spawn: 0
       enemyPrefab: {fileID: 0}

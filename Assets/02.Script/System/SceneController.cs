@@ -13,7 +13,12 @@ public class SceneController : MonoBehaviour
     private void Awake()
     {
         Debug.Log("[SceneController] 처음 씬 종류 임시로 로비 설정");
-        if (Instance != null && Instance != this) return;
+        if (Instance != null && Instance != this) 
+        {
+            Destroy(gameObject);
+            return;
+        }
+        
 
         Instance = this;    
         DontDestroyOnLoad(gameObject);
@@ -25,9 +30,11 @@ public class SceneController : MonoBehaviour
         }
     }
 
-    public void GetStage(string sceneName) { }
     public void SceneChange(string sceneName)
     {
+        if (string.IsNullOrWhiteSpace(sceneName)) return;
+        sceneName = sceneName.Trim();
+
         // 씬컨트롤에선 스테이지 종류이름 받고 다른곳에선 Stage로 받아야함
         currentScene = sceneName;
         if (sceneName == "Stage")
@@ -35,8 +42,9 @@ public class SceneController : MonoBehaviour
             int random = UnityEngine.Random.Range(0, stageCatalog.Length);
             sceneName = stageCatalog[random];
         }
-        if (string.IsNullOrWhiteSpace(sceneName)) return;
+
         if (SceneExists(sceneName)) SceneManager.LoadScene(sceneName);
+        SoundManager.Instance.SfxStop();
 
     }
     private bool SceneExists(string sceneName)

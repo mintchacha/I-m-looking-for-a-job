@@ -58,7 +58,7 @@ public class WaveManager : MonoBehaviour
             Debug.Log("[WaveManager] spawner 참조 안되어있음");
             return;
         }
-        ;
+        
         WaveSetting();
     }
     private void Update()
@@ -100,25 +100,26 @@ public class WaveManager : MonoBehaviour
         for (int i = 0; i < currentStayEnemy; i++)
         {
             GameObject enemy;
-
             if (currentWave.boss.spawn > 0)
             {
                 enemy = currentWave.boss.enemyPrefab;
                 currentWave.boss.spawn--;
             }
-            else if (currentWave.eliteEnemy.spawn > 0 && i % 10 == 0)
+            else
             {
                 // 10번째마다 엘리트 출현
                 if (currentWave.eliteEnemy.enemyPrefab == null) Debug.Log("엘리트 프리팹이 null 입니다.");
                 enemy = currentWave.eliteEnemy.enemyPrefab;
                 currentWave.eliteEnemy.spawn--;
             }
-            else
-            { 
-                enemy = currentWave.normalEnemy.enemyPrefab;
-                currentWave.normalEnemy.spawn--;
-            }
+            //else
+            //{ 
+            //    enemy = currentWave.normalEnemy.enemyPrefab;
+            //    currentWave.normalEnemy.spawn--;
+            //}
+
             Debug.Log(enemy);
+
             if (enemy != null)
             {
                 // 보스존재하면 우측 스포너에서 출현, 그래서 시작 스폰은 죄측
@@ -139,6 +140,7 @@ public class WaveManager : MonoBehaviour
             Debug.Log("Spawner 우측 대기열" + spawner2.EnemyQueue.Count);
         }
 
+        // 8마리까지만나오는.
         spawner1.EnemySpawn();
         spawner2.EnemySpawn();
     }

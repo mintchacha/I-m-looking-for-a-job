@@ -15,8 +15,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] HitBox hitBox;
 
     GameObject owner;
-    [Header("공격 주기")]
-    public float attackCoolDown = 1f;
+    float attackCoolDown;
 
     float lastAttackTime = -999f;
     public float LastAttackTime => lastAttackTime;
@@ -51,7 +50,10 @@ public class EnemyManager : MonoBehaviour
             return;
         }
     }
-
+    private void OnEnable()
+    {
+        attackCoolDown = unitStat.statData.atkSpeed;
+    }
     private void Update()
     {
         // 공격 범위 안에 들어오고, 공격 쿨타임이 경과했을때 공격 실행

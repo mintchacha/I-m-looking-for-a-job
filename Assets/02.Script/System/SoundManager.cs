@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 [Serializable]
 public struct AudioFile
@@ -25,12 +26,18 @@ public class SoundManager : MonoBehaviour
     [SerializeField] List<AudioFile> sfxClip;
     Dictionary<string, AudioClip> sfxDictionary = new Dictionary<string, AudioClip>();
 
-    [SerializeField] bool debugMode = false;
+    [Header("볼륨")]
+    [SerializeField] Slider volumSlider;
+
 
     private void Awake()
     {
 
-        if (Instance != null && Instance != this) return;
+        if (Instance != null && Instance != this) 
+        {
+            Destroy(gameObject); 
+            return;            
+        }
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
@@ -44,6 +51,11 @@ public class SoundManager : MonoBehaviour
         if (bgmClip.Count == 0) 
         {
             Debug.Log("[SoundManager] AudioClip 설정 안되어있음");
+            return;
+        }
+        if (volumSlider == null) 
+        {
+            Debug.Log("[SoundManager] volumSlider 참조안됨");
             return;
         }
 
@@ -64,10 +76,17 @@ public class SoundManager : MonoBehaviour
     {
         SceneManager.sceneLoaded -= BgmPlay;
     }
+    private void Update()
+    {
+        float value = volumSlider.value;
+        bgmSource.volume = value;
+        sfxSource.volume = value;
+    }
 
     void BgmPlay(Scene scene, LoadSceneMode mode)
     {
-        if (debugMode) return;
+
+        if (volumSlider == null || bgmSource == null || sfxSource == null) return;
 
         //string currentScene = SceneManager.GetActiveScene().name;
         string currentScene = SceneController.currentScene;
@@ -87,13 +106,13 @@ public class SoundManager : MonoBehaviour
     }
 
     public void BgmStop() => bgmSource.Stop();
+    public void SfxStop() => sfxSource.Stop();
 
 
 
 
     public void SfxPlay(string audioName)
     {
-        if (debugMode) return;
         if (sfxDictionary.TryGetValue(audioName, out AudioClip audio))
         {
             sfxSource.PlayOneShot(audio);

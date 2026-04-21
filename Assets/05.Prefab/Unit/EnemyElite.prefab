@@ -276,7 +276,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -322723821, guid: 3db8dcbcb9ccfe74baad277d8e553d45, type: 3}
+  m_Sprite: {fileID: -1931880475, guid: 6a339e2cd88e6a346a6f8994cc462d35, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -296,7 +296,7 @@ Animator:
   m_GameObject: {fileID: 5967761502370868408}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ec04454e8f0b59d40b6895a93ea90f03, type: 2}
+  m_Controller: {fileID: 9100000, guid: dc256816f12316f4cae87fc20bde8370, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -342,7 +342,7 @@ GameObject:
   - component: {fileID: 8990816908368746075}
   - component: {fileID: 5130326739878440016}
   m_Layer: 6
-  m_Name: Enemy
+  m_Name: EnemyElite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -475,10 +475,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UnitStat
   health: {fileID: 7328812735600666274}
   statData:
-    name: NormalEnemy
-    maxHealth: 15
-    atk: 5
-    atkSpeed: 1.5
+    name: EliteEnemy
+    maxHealth: 40
+    atk: 15
+    atkSpeed: 1
   score: 200
   colliderVerticalOffset: 0.5
   colliderHorizontalOffset: 0.5
