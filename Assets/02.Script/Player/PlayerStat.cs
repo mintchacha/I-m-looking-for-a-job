@@ -10,6 +10,9 @@ public class PlayerStat : MonoBehaviour
     public UnitStatData statData;
     [Header("기본공격 컴포넌트")]
     public DefaultAttack defaultAttack;
+    [Header("필살기 게이지")]
+    public static float specialAttackEnerge;
+    public static bool isSpecialAttack = false;
 
     private void Awake()
     {
@@ -20,5 +23,17 @@ public class PlayerStat : MonoBehaviour
         }
         if(health == null) health = GetComponent<UnitHealth>();
         health.SetMaxHealth(statData.maxHealth);
+    }
+
+    public static void SpecialEnergeChange(float amount) 
+    {
+        if (amount <= 0) return;
+        specialAttackEnerge = Mathf.Clamp(specialAttackEnerge += amount, 0, 100);
+        if (specialAttackEnerge >= 100) isSpecialAttack = true;
+    }
+    public static void SpecialAttack() 
+    {
+        specialAttackEnerge = 0;
+        isSpecialAttack = false;
     }
 }

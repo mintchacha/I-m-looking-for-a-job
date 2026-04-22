@@ -10,11 +10,13 @@ public class PlayerInputReader : MonoBehaviour
     InputAction moveAction;
     InputAction jumpAction;
     InputAction AttackAction;
+    InputAction SpecialAction;
 
     // 액션이름 집합
     string moveActionName = "Move";
     string jumpActionName = "Jump";
     string AttackActionName = "Attack";
+    string spacialActionName = "SpecialAttack";
 
     // Input 입력값
     public Vector2 MoveVector { get; private set; }
@@ -36,6 +38,11 @@ public class PlayerInputReader : MonoBehaviour
         
         if (jumpAction.WasPressedThisFrame()) jumpPressed = true;
         if (AttackAction.WasPressedThisFrame()) attackPressed = true;
+        if (PlayerStat.isSpecialAttack && SpecialAction.WasPressedThisFrame()) 
+        {
+            Debug.Log("필살기 시전!");
+            PlayerStat.SpecialAttack();
+        }
     }
 
 
@@ -50,6 +57,7 @@ public class PlayerInputReader : MonoBehaviour
         moveAction = FindAction(moveActionName);
         jumpAction = FindAction(jumpActionName);
         AttackAction = FindAction(AttackActionName);
+        SpecialAction = FindAction(spacialActionName);
     }
 
     InputAction FindAction(string actionName)
