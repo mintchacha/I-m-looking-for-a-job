@@ -20,6 +20,8 @@ public class EnemyManager : MonoBehaviour
     float lastAttackTime = -999f;
     public float LastAttackTime => lastAttackTime;
 
+    [Header("공격 지속시간")]
+    public float attckDuration = 0.2f;
     [Header("공격 생성 거리")]
     public float attckDistance = 0.3f;
     public Action AttackTrigger;
@@ -60,8 +62,12 @@ public class EnemyManager : MonoBehaviour
         if (attackRange.isAttack && Time.time > lastAttackTime + attackCoolDown)
         {
             EnemyAttack();
+        } else if (unitState.state == UNITSTATE.ATTACK && !attackRange.isAttack && Time.time > lastAttackTime + attckDuration)
+        {
+            // 공격상태이며 공격시간끝나고 범위 밖에 있을시 
+            unitState.SetUnitState(UNITSTATE.IDLE);
         }
-        if (unitState.state == UNITSTATE.DIE && !isDie) 
+        if (unitState.state == UNITSTATE.DIE && !isDie)
         {
             //RewardManager.Instance.IncreseScore(unitStat.score);
             RewardManager.Instance.IncreseScore(1);

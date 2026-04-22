@@ -12,6 +12,7 @@ public enum UNITSTATE
     MOVE,
     JUMP,
     ATTACK,
+    DAMAGED,
     DIE
 }
 

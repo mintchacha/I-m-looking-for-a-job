@@ -3,15 +3,13 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class UnitMove2D : MonoBehaviour
 {
-    public Vector2 moveVector { get; private set; }    
-
     Rigidbody2D unitRb;
     [SerializeField] UnitChase unitChase;
     [SerializeField] UnitState unitState;
 
     [Header("이동속도")]
     public float moveSpeed = 5f;
-
+    public Vector2 moveVector { get; private set; }
 
     private void Awake()
     {
@@ -33,10 +31,12 @@ public class UnitMove2D : MonoBehaviour
     private void Update()
     {
         UpdateDirection();
+        UpdateState();
     }
     private void FixedUpdate()
     {
-        if (unitState.state != UNITSTATE.DIE && unitChase.isChasing) unitRb.linearVelocity = moveVector * moveSpeed;        
+        if (unitState.state == UNITSTATE.MOVE && unitChase.isChasing) 
+            unitRb.linearVelocity = moveVector * moveSpeed;        
     }
 
     void UpdateDirection()
@@ -58,4 +58,22 @@ public class UnitMove2D : MonoBehaviour
             unitState.SetDirection(DIRECTION.LEFT);
         }
     }
+    void UpdateState()
+    {
+        // 사망시엔 상태변경금지 
+        if (unitState.state == UNITSTATE.DIE) return;
+        // 피격시 상태변경금지
+        if (unitState.state == UNITSTATE.DAMAGED) return;
+
+        // 공격중 아닐 시에 적용
+        if (unitState.state != UNITSTATE.ATTACK && moveVector == Vector2.zero)
+        {
+            unitState.SetUnitState(UNITSTATE.IDLE);
+        }
+        else if (unitState.state != UNITSTATE.ATTACK && moveVector != Vector2.zero)
+        {
+            unitState.SetUnitState(UNITSTATE.MOVE);
+        }
+    }
+
 }

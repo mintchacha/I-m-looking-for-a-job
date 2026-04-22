@@ -12,6 +12,8 @@ public class UnitHealth : MonoBehaviour, IDamageable
     [Header("피격 딜레이 설정")]
     public float damageDelay = 0f;
     float lastDamegeTime = -999f;
+    [Header("피격 경직시간 설정")]
+    public float damageStay = 0f;
 
     [SerializeField] bool debugMode = false;
 
@@ -38,6 +40,9 @@ public class UnitHealth : MonoBehaviour, IDamageable
 
     private void Update()
     {
+        //피격 경직시간이후 다시 초기화
+        if(unitstate.state == UNITSTATE.DAMAGED && Time.time > lastDamegeTime + damageStay) unitstate.SetUnitState(UNITSTATE.IDLE);
+
         if (debugMode) Debug.Log((Time.time < lastDamegeTime + damageDelay) ? (lastDamegeTime + damageDelay) - Time.time : "피격무시 시간 종료");
     }
 
@@ -57,6 +62,8 @@ public class UnitHealth : MonoBehaviour, IDamageable
         lastDamegeTime = Time.time;
         currentHealth = Mathf.Clamp(currentHealth - amount, 0, maxHealth);
         anim.OnDamageTaken();
+        unitstate.SetUnitState(UNITSTATE.DAMAGED);
+
 
         if (debugMode) Debug.Log(gameObject.name + " : 데미지 = " + amount);
 

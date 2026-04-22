@@ -23,8 +23,6 @@ public class UnitAnim : MonoBehaviour, IUnitAnim
     string attackTriggerName = "IsAttack";
     int attackTriggerHash;
 
-    bool isMoving = false;
-
     private void Awake()
     {
         if(unitAnim == null) unitAnim = GetComponent<Animator>();
@@ -50,15 +48,12 @@ public class UnitAnim : MonoBehaviour, IUnitAnim
     {
         enemyManager.AttackTrigger -= OnUnitAttack;
     }
-    private void Update()
-    {
-        isMoving = move2D.moveVector != Vector2.zero ? true : false;
-    }
+
     private void LateUpdate()
     {
         float direction = (unitState.direction == DIRECTION.LEFT) ? 0f : 1f;
         unitAnim.SetFloat(unitDirectionHash, direction);
-        unitAnim.SetBool(isMovingHash, isMoving);
+        unitAnim.SetBool(isMovingHash, (unitState.state == UNITSTATE.MOVE));
     }
 
     // TakeDamage 이벤트가 발생할 때마다 inputDamage를 true로 설정하는 메서드

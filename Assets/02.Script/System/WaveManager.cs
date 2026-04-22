@@ -100,23 +100,23 @@ public class WaveManager : MonoBehaviour
         for (int i = 0; i < currentStayEnemy; i++)
         {
             GameObject enemy;
-            if (currentWave.boss.spawn > 0)
+            if (currentWave.boss.spawn > 0) // 보스는 필드에 1개체만 존재할것.
             {
                 enemy = currentWave.boss.enemyPrefab;
                 currentWave.boss.spawn--;
             }
-            else
+            else if (currentWave.eliteEnemy.spawn > 0 && (i+1) % 9 == 0) // 10번째 마다 엘리트 입력 i+1은 0일때도 0%9 가 0 이기때문에
             {
                 // 10번째마다 엘리트 출현
                 if (currentWave.eliteEnemy.enemyPrefab == null) Debug.Log("엘리트 프리팹이 null 입니다.");
                 enemy = currentWave.eliteEnemy.enemyPrefab;
                 currentWave.eliteEnemy.spawn--;
             }
-            //else
-            //{ 
-            //    enemy = currentWave.normalEnemy.enemyPrefab;
-            //    currentWave.normalEnemy.spawn--;
-            //}
+            else
+            {
+                enemy = currentWave.normalEnemy.enemyPrefab;
+                currentWave.normalEnemy.spawn--;
+            }
 
             Debug.Log(enemy);
 
