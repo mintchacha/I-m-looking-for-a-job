@@ -22,9 +22,11 @@ public class PlayerInputReader : MonoBehaviour
     public Vector2 MoveVector { get; private set; }
     public bool jumpPressed { get; private set; }
     public bool attackPressed { get; private set; }
+    public bool specialAttackPressed { get; private set; }
     // 입력값 초기화
     public void ResetJump() => jumpPressed = false;    
     public void ResetAttack() => attackPressed = false;
+    public void ResetSpecialAttack() => specialAttackPressed = false;
 
     private void Awake()
     {
@@ -38,11 +40,7 @@ public class PlayerInputReader : MonoBehaviour
         
         if (jumpAction.WasPressedThisFrame()) jumpPressed = true;
         if (AttackAction.WasPressedThisFrame()) attackPressed = true;
-        if (PlayerStat.isSpecialAttack && SpecialAction.WasPressedThisFrame()) 
-        {
-            Debug.Log("필살기 시전!");
-            PlayerStat.SpecialAttack();
-        }
+        if (SpecialAction.WasPressedThisFrame()) specialAttackPressed = true;
     }
 
 

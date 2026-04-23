@@ -10,6 +10,7 @@ public class PlayerStateUI : MonoBehaviour
     [SerializeField] Image playerSpecialAttackUI;
 
     UnitHealth playerHealth;
+    PlayerStat playerStat;
     float Slidervalue;
 
     private void Awake()
@@ -18,6 +19,12 @@ public class PlayerStateUI : MonoBehaviour
         if (playerHealth == null)
         {
             Debug.Log("[PlayerStateUI] UnitHealth이 참조 누락");
+            return;
+        }
+        playerStat = player.GetComponent<PlayerStat>();
+        if (playerStat == null)
+        {
+            Debug.Log("[PlayerStateUI] playerStat 참조 누락");
             return;
         }
         if (playerHealthSlider == null)
@@ -36,7 +43,7 @@ public class PlayerStateUI : MonoBehaviour
     {
         playerHealthSlider.value = playerHealth.currentHealth / playerHealth.maxHealth;
         playerSpecialAttackEnergeSlider.value = PlayerStat.specialAttackEnerge / 100;
-        if (PlayerStat.isSpecialAttack)
+        if (playerStat.isSpecialAttack)
         {
             playerSpecialAttackUI.color = new Color(1f, 1f, 1f);
         }

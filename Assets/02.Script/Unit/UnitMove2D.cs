@@ -63,7 +63,11 @@ public class UnitMove2D : MonoBehaviour
         // 사망시엔 상태변경금지 
         if (unitState.state == UNITSTATE.DIE) return;
         // 피격시 상태변경금지
-        if (unitState.state == UNITSTATE.DAMAGED) return;
+        if (unitState.state == UNITSTATE.DAMAGED) {
+
+            Debug.Log(unitState.state);
+            return;
+        }
 
         // 공격중 아닐 시에 적용
         if (unitState.state != UNITSTATE.ATTACK && moveVector == Vector2.zero)

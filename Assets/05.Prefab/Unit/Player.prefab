@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 8195069703805224816}
   - component: {fileID: 3007952008412864345}
   - component: {fileID: 1594894459086518908}
+  - component: {fileID: 3163114595951572921}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -184,6 +185,8 @@ MonoBehaviour:
     atk: 5
     atkSpeed: 0.2
   defaultAttack: {fileID: 7974123332926651855, guid: 12b1d93d415dc8e41a426375aac780dc, type: 3}
+  specialAttack: {fileID: 3751191078360867379, guid: a67be793e229f2e41adb30d048ce1a97, type: 3}
+  isSpecialAttack: 0
 --- !u!114 &8195069703805224816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,6 +202,7 @@ MonoBehaviour:
   unitstate: {fileID: 1594894459086518908}
   currentHealth: 0
   damageDelay: 0.5
+  damageStay: 0
   debugMode: 0
 --- !u!114 &3007952008412864345
 MonoBehaviour:
@@ -232,6 +236,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UnitState
   direction: 0
   state: 0
+--- !u!114 &3163114595951572921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 393673817683093464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec6fbcd3f416714695eead5be50afcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkillManager
+  playerinput: {fileID: 4438677297011255341}
+  playerStat: {fileID: 5796903631812428800}
+  playerState: {fileID: 1594894459086518908}
+  attckDistance: 0
+  debugMode: 0
 --- !u!1 &2472647858436668132
 GameObject:
   m_ObjectHideFlags: 0

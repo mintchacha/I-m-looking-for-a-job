@@ -113,6 +113,8 @@ public class SoundManager : MonoBehaviour
 
     public void SfxPlay(string audioName)
     {
+        if (audioName.Trim() == "none") return;
+
         if (sfxDictionary.TryGetValue(audioName, out AudioClip audio))
         {
             sfxSource.PlayOneShot(audio);

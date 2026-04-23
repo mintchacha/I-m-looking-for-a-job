@@ -75,12 +75,12 @@ public class UnitHealth : MonoBehaviour, IDamageable
     void UnitDie()
     {
         unitstate.SetUnitState(UNITSTATE.DIE);
-        anim.OnDie();
+        //anim.OnDie();
         // 적이 죽으면 웨이브 카운트감소
         if (((1 << gameObject.layer) & LayerMask.GetMask("Enemy")) != 0) 
         {
             WaveManager.Instance.DecreaseStayEnemy();
-            PlayerStat.SpecialEnergeChange(100); 
+            PlayerStat.SpecialEnergeChange(20); 
         }
     }
 

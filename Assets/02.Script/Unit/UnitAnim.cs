@@ -54,6 +54,8 @@ public class UnitAnim : MonoBehaviour, IUnitAnim
         float direction = (unitState.direction == DIRECTION.LEFT) ? 0f : 1f;
         unitAnim.SetFloat(unitDirectionHash, direction);
         unitAnim.SetBool(isMovingHash, (unitState.state == UNITSTATE.MOVE));
+
+        unitAnim.SetBool(dieTriggerHash, (unitState.state == UNITSTATE.DIE));
     }
 
     // TakeDamage 이벤트가 발생할 때마다 inputDamage를 true로 설정하는 메서드
@@ -77,5 +79,7 @@ public class UnitAnim : MonoBehaviour, IUnitAnim
 
     // 사망 애니메이션 후 실행
     void UnitDestroy() => Destroy(owner);
+    public void OnStop() => unitAnim.speed = 0f;
+    public void OnPlay() => unitAnim.speed = 1f;
 
 }

@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitBoxAnim
   hitAnimator: {fileID: 2545446028737948911}
-  hitBox: {fileID: 8981235920283491240}
+  HiBox: {fileID: 8981235920283491240}
 --- !u!114 &8981235920283491240
 MonoBehaviour:
   m_ObjectHideFlags: 0

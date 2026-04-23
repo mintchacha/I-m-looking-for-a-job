@@ -86,9 +86,7 @@ public class HitBox : MonoBehaviour
                 target.TakeDamage(damage);
             }
         }
-
     }
-
     //void DestroyHitBox() => Destroy(gameObject);
 
     private void OnDrawGizmos()

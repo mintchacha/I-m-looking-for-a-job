@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Playables;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMove2D : MonoBehaviour
@@ -53,7 +54,7 @@ public class PlayerMove2D : MonoBehaviour
         Vector2 newPosition = inputReader.MoveVector * moveSpeed;
 
         // 공격중엔, 사망 시 이동 금지 x0으로 안하면 이전 물리 남아서 미끄러짐           
-        if (unitState.state == UNITSTATE.DIE)
+        if (unitState.state == UNITSTATE.DIE || unitState.state == UNITSTATE.SPECIALATTACK)
         {
             playerRb.linearVelocity = new Vector2(0f, 0f);
         }
@@ -81,7 +82,7 @@ public class PlayerMove2D : MonoBehaviour
     void UpdateDirection()
     {
         // 공격중, 사망시엔 방향변경금지 
-        if (BattleManager.isAttack || unitState.state == UNITSTATE.DIE) return;
+        if (BattleManager.isAttack || unitState.state == UNITSTATE.DIE || unitState.state == UNITSTATE.SPECIALATTACK) return;
 
         if (inputReader.MoveVector.x > 0.1f)
         {
@@ -99,6 +100,7 @@ public class PlayerMove2D : MonoBehaviour
     {
         // 사망시엔 상태변경금지 
         if (unitState.state == UNITSTATE.DIE) return;       
+        if (unitState.state == UNITSTATE.SPECIALATTACK) return;       
 
         if (!isGrounded)
         {

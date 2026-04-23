@@ -48,6 +48,7 @@ MonoBehaviour:
   id: 1
   damageMultiplier: 1
   maxComboCount: 3
+  attckDistance: 0.3
   colliderVerticalOffset: 1
   colliderHorizontalOffset: 0.5
 --- !u!212 &3535972296955728833
@@ -99,13 +100,13 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -1524435299, guid: 1aa6888339cd621438e43a7ab18a3bf2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.8666667, y: 1.95}
+  m_Size: {x: 1.12, y: 1.17}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0

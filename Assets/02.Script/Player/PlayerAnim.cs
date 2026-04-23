@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Playables;
 
 [RequireComponent(typeof(Animator))]
 public class PlayerAnim : MonoBehaviour, IUnitAnim
@@ -23,6 +24,8 @@ public class PlayerAnim : MonoBehaviour, IUnitAnim
     int isAttackHash;
     string AttackComboParamName = "AttackCombo";
     int AttackComboHash;
+    string isSpecialAttackParamName = "IsSpecialAttack";
+    int isSpecialAttackHash;
     string damageTriggerName = "IsDamaged";
     int damageTriggerHash;
     string dieTriggerName = "IsDie";
@@ -59,6 +62,7 @@ public class PlayerAnim : MonoBehaviour, IUnitAnim
         // 기본공격 여부
         isAttackHash = Animator.StringToHash(isAttackParamName);
         AttackComboHash = Animator.StringToHash(AttackComboParamName);
+        isSpecialAttackHash = Animator.StringToHash(isSpecialAttackParamName);
 
         damageTriggerHash = Animator.StringToHash(damageTriggerName);
         dieTriggerHash = Animator.StringToHash(dieTriggerName);
@@ -71,6 +75,8 @@ public class PlayerAnim : MonoBehaviour, IUnitAnim
         // 기본공격 여부
         playerAnimator.SetBool(isAttackHash, BattleManager.isAttack);
         playerAnimator.SetInteger(AttackComboHash, BattleManager.currentAttackCount);
+        // 필살기
+        playerAnimator.SetBool(isSpecialAttackHash, (unitState.state == UNITSTATE.SPECIALATTACK));
 
     }
 
@@ -90,6 +96,18 @@ public class PlayerAnim : MonoBehaviour, IUnitAnim
     public void OnDie()
     {
         playerAnimator.SetBool(dieTriggerHash, (unitState.state == UNITSTATE.DIE));
+    }
+    public void SetZoomOut()
+    {
+        CameraMove2D.Instance.SetZoomOut();
+    }
+    public void SetZoomIn()
+    {
+        CameraMove2D.Instance.SetZoomIn();
+    }
+    public void ResetState()
+    {
+        unitState.SetUnitState(UNITSTATE.IDLE);
     }
 
 }

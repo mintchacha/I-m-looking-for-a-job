@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-
+// 기본 공격 매니저.
 public class BattleManager : MonoBehaviour
 {
     [Header("플레이어 상태 컴포넌트")]
@@ -17,7 +15,7 @@ public class BattleManager : MonoBehaviour
     static float lastAttackTime = -9999f;
 
     [Header("공격 적용 거리")]
-    public float attckDistance = 0.3f;
+    public float attckDistance;
     float inputAttackKeyTime = 0.5f; // 공격키 입력 허용 시간
 
     [Header("공격중 여부")]
@@ -52,6 +50,10 @@ public class BattleManager : MonoBehaviour
             Debug.Log("[BattleManager] UnitState가 할당되지 않음");
             return;
         }
+    }
+    private void Start()
+    {
+        attckDistance = playerStat.defaultAttack.attckDistance;
     }
 
     private void Update()

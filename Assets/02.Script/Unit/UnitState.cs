@@ -5,6 +5,7 @@ public class UnitState : MonoBehaviour
 {
     public DIRECTION direction;
     public UNITSTATE state;    
+    public bool spcialState = false;
 
     public void SetDirection(DIRECTION direction) 
     {
@@ -12,6 +13,6 @@ public class UnitState : MonoBehaviour
     }
     public void SetUnitState(UNITSTATE state) 
     {
-        this.state = state;
+        if (!spcialState) this.state = state;
     }
 }

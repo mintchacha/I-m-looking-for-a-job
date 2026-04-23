@@ -4,6 +4,7 @@ using System.Linq;
 using TMPro;
 using Unity.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WaveManager : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class WaveManager : MonoBehaviour
     [SerializeField] PanelSizeAnim wavePanel;
     [SerializeField] TextMeshProUGUI waveTitle;
     [SerializeField] TextMeshProUGUI waveCountText;
+
+    [Header("보스 웨이브 UI")]
+    [SerializeField] PanelFadeAnim BossPanel;
 
     // 필요, 몬스터 종류 , 스폰 수 설정
     [Serializable]
@@ -41,6 +45,7 @@ public class WaveManager : MonoBehaviour
     int waveCount = 0;
     // 존재중인 적 개체수
     public int currentStayEnemy { get; private set; }
+    bool isBoss = false;
 
     [SerializeField] bool debugMode = false;
 
@@ -58,6 +63,11 @@ public class WaveManager : MonoBehaviour
             Debug.Log("[WaveManager] spawner 참조 안되어있음");
             return;
         }
+        if (BossPanel == null)
+        {
+            Debug.Log("[WaveManager] BossPanel 참조 안되어있음");
+            return;
+        }
         
         WaveSetting();
     }
@@ -68,12 +78,12 @@ public class WaveManager : MonoBehaviour
     void NextWaveSetting()
     {
         waveCount++;
-        if (waveCount >= waveList.Count)
+        if (waveCount >= waveList.Count && !isBoss)
         {
             RewardManager.Instance.SpawnRewardUI();
             return;
         }
-        Debug.Log(waveCount+1 + "라운드 시작");
+        Debug.Log(waveCount + 1 + "라운드 시작");
         WaveSetting();
     }
     void WaveSetting()
@@ -84,11 +94,20 @@ public class WaveManager : MonoBehaviour
 
         EnemyQueueInput();
 
-        // 웨이브 시작 ui
-        waveTitle.text = currentWave.waveId;
-        waveCountText.text = "목표 적 : " + currentStayEnemy;
-        wavePanel.gameObject.SetActive(true);
-        wavePanel.Open();
+        if (isBoss)
+        {
+            // 보스 경보
+            BossPanel.gameObject.SetActive(true);
+            BossPanel.AnimSet();
+        }
+        else
+        {
+            // 웨이브 시작 ui
+            waveTitle.text = currentWave.waveId;
+            waveCountText.text = "목표 적 : " + currentStayEnemy;
+            wavePanel.gameObject.SetActive(true);
+            wavePanel.Open();
+        }
 
     }
 
@@ -104,6 +123,7 @@ public class WaveManager : MonoBehaviour
             {
                 enemy = currentWave.boss.enemyPrefab;
                 currentWave.boss.spawn--;
+                isBoss = true;
             }
             else if (currentWave.eliteEnemy.spawn > 0 && (i+1) % 9 == 0) // 10번째 마다 엘리트 입력 i+1은 0일때도 0%9 가 0 이기때문에
             {
@@ -111,11 +131,13 @@ public class WaveManager : MonoBehaviour
                 if (currentWave.eliteEnemy.enemyPrefab == null) Debug.Log("엘리트 프리팹이 null 입니다.");
                 enemy = currentWave.eliteEnemy.enemyPrefab;
                 currentWave.eliteEnemy.spawn--;
+                isBoss = false;
             }
             else
             {
                 enemy = currentWave.normalEnemy.enemyPrefab;
                 currentWave.normalEnemy.spawn--;
+                isBoss = false;
             }
 
             Debug.Log(enemy);

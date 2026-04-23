@@ -6,7 +6,7 @@ public class DefaultAttack : MonoBehaviour
     public int id;
     public float damageMultiplier;
     public int maxComboCount;
-    //public Sprite attackSprite; 이펙트 히트박스로 통일
+    public float attckDistance = 0.3f;
 
     [Header("피격 범위 설정")]
 
