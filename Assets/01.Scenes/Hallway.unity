@@ -14668,18 +14668,6 @@ PrefabInstance:
       propertyPath: waveCountText
       value: 
       objectReference: {fileID: 1934301130}
-    - target: {fileID: 1676014618199289818, guid: 71e35b133a168434e812029b4a7ab8d9, type: 3}
-      propertyPath: waveList.Array.data[0].boss.enemyPrefab
-      value: 
-      objectReference: {fileID: 6277088575349943330, guid: ff995abd5b65d0d4a8f9976b3cf8ee16, type: 3}
-    - target: {fileID: 1676014618199289818, guid: 71e35b133a168434e812029b4a7ab8d9, type: 3}
-      propertyPath: waveList.Array.data[1].boss.enemyPrefab
-      value: 
-      objectReference: {fileID: 6277088575349943330, guid: ff995abd5b65d0d4a8f9976b3cf8ee16, type: 3}
-    - target: {fileID: 1676014618199289818, guid: 71e35b133a168434e812029b4a7ab8d9, type: 3}
-      propertyPath: waveList.Array.data[2].boss.enemyPrefab
-      value: 
-      objectReference: {fileID: 6277088575349943330, guid: ff995abd5b65d0d4a8f9976b3cf8ee16, type: 3}
     - target: {fileID: 6339399813714616273, guid: 71e35b133a168434e812029b4a7ab8d9, type: 3}
       propertyPath: target
       value: 

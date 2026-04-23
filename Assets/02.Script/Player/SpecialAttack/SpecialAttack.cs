@@ -38,14 +38,12 @@ public class SpecialAttack : MonoBehaviour
             targetState.SetUnitState(UNITSTATE.DAMAGED);
             targetState.spcialState = true;
             targetAnim.OnStop();
+            Invoke("EffectEnd", duration);
         }
         else
         {
             Debug.Log($"[SpecialAttack] {enemy.name}대상에 targetMove혹은 targetAnim 혹은 targetState 가 없습니다");
         }
-
-        Invoke("EffectEnd", duration);
-
     }
     public void EffectEnd()
     {        

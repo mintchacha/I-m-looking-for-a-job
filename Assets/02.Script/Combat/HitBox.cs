@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public class HitBox : MonoBehaviour

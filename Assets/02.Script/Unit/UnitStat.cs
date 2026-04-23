@@ -1,9 +1,18 @@
 using System;
 using UnityEngine;
 
+public enum UNITCATEGORY 
+{
+    NORMAL,
+    ELITE,
+    BOSS,
+}
 // 플레이어의 체력과 공격력 등의 스탯을 관리하는 클래스
 public class UnitStat : MonoBehaviour
 {
+
+    [Header("유닛 종류")]
+    public UNITCATEGORY category;
     [Header("체력관리 컴포넌트")]
     [SerializeField] UnitHealth health;
     [Header("유닛의 능력치")]

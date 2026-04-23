@@ -78,7 +78,8 @@ public class WaveManager : MonoBehaviour
     void NextWaveSetting()
     {
         waveCount++;
-        if (waveCount >= waveList.Count && !isBoss)
+        // 웨이브 카운트가 0부터 시작하니까 waveList-1과 같아지면 게임 정지
+        if (waveCount >= waveList.Count - 1)
         {
             RewardManager.Instance.SpawnRewardUI();
             return;
@@ -140,7 +141,7 @@ public class WaveManager : MonoBehaviour
                 isBoss = false;
             }
 
-            Debug.Log(enemy);
+            //Debug.Log(enemy);
 
             if (enemy != null)
             {

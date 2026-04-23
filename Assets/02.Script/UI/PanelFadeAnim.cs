@@ -57,7 +57,7 @@ public class PanelFadeAnim : MonoBehaviour
         blinkCount--;
         if (blinkCount == 0)
         {
-            //gameObject.SetActive(false);
+            gameObject.SetActive(false);
         }
         else
         {

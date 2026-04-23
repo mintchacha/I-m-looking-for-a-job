@@ -53,16 +53,6 @@ MonoBehaviour:
   spawner1: {fileID: 7004229309220594913}
   spawner2: {fileID: 6339399813714616273}
   waveList:
-  - waveId: "3 \uC6E8\uC774\uBE0C"
-    normalEnemy:
-      spawn: 0
-      enemyPrefab: {fileID: 6277088575349943330, guid: d4c5b02ad50fa9444a148d101d924a5c, type: 3}
-    eliteEnemy:
-      spawn: 0
-      enemyPrefab: {fileID: 6277088575349943330, guid: 1db9d058f67ad074ba7086ffb6bd607b, type: 3}
-    boss:
-      spawn: 1
-      enemyPrefab: {fileID: 0}
   - waveId: "1 \uC6E8\uC774\uBE0C"
     normalEnemy:
       spawn: 5
@@ -72,7 +62,7 @@ MonoBehaviour:
       enemyPrefab: {fileID: 6277088575349943330, guid: 1db9d058f67ad074ba7086ffb6bd607b, type: 3}
     boss:
       spawn: 0
-      enemyPrefab: {fileID: 0}
+      enemyPrefab: {fileID: 6277088575349943330, guid: ff995abd5b65d0d4a8f9976b3cf8ee16, type: 3}
   - waveId: "2\uC6E8\uC774\uBE0C"
     normalEnemy:
       spawn: 9
@@ -82,7 +72,17 @@ MonoBehaviour:
       enemyPrefab: {fileID: 6277088575349943330, guid: 1db9d058f67ad074ba7086ffb6bd607b, type: 3}
     boss:
       spawn: 0
-      enemyPrefab: {fileID: 0}
+      enemyPrefab: {fileID: 6277088575349943330, guid: ff995abd5b65d0d4a8f9976b3cf8ee16, type: 3}
+  - waveId: "3 \uC6E8\uC774\uBE0C"
+    normalEnemy:
+      spawn: 0
+      enemyPrefab: {fileID: 6277088575349943330, guid: d4c5b02ad50fa9444a148d101d924a5c, type: 3}
+    eliteEnemy:
+      spawn: 0
+      enemyPrefab: {fileID: 6277088575349943330, guid: 1db9d058f67ad074ba7086ffb6bd607b, type: 3}
+    boss:
+      spawn: 1
+      enemyPrefab: {fileID: 6277088575349943330, guid: ff995abd5b65d0d4a8f9976b3cf8ee16, type: 3}
   debugMode: 0
 --- !u!1 &4767770374871057529
 GameObject:
