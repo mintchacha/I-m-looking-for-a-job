@@ -16,12 +16,13 @@ public class PlayerStateUI : MonoBehaviour
     private void Awake()
     {
         playerHealth = player.GetComponent<UnitHealth>();
+        playerStat = player.GetComponent<PlayerStat>();
+
         if (playerHealth == null)
         {
             Debug.Log("[PlayerStateUI] UnitHealth이 참조 누락");
             return;
         }
-        playerStat = player.GetComponent<PlayerStat>();
         if (playerStat == null)
         {
             Debug.Log("[PlayerStateUI] playerStat 참조 누락");

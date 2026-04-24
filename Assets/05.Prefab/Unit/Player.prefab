@@ -181,9 +181,9 @@ MonoBehaviour:
   health: {fileID: 8195069703805224816}
   statData:
     name: player
-    maxHealth: 1
-    atk: 50
-    atkSpeed: 0.2
+    maxHealth: 80
+    atk: 5
+    atkSpeed: 0.1
   defaultAttack: {fileID: 7974123332926651855, guid: 12b1d93d415dc8e41a426375aac780dc, type: 3}
   specialAttack: {fileID: 3751191078360867379, guid: a67be793e229f2e41adb30d048ce1a97, type: 3}
   isSpecialAttack: 0

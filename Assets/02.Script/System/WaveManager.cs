@@ -98,7 +98,8 @@ public class WaveManager : MonoBehaviour
         if (isBoss)
         {
             // 보스 경보
-            SoundManager.Instance.SfxRepeatSet("BossRoom", 3, 1f);
+            if(SoundManager.Instance != null) SoundManager.Instance.SfxRepeatSet("BossRoom", 3, 1f);
+            if(SoundManager.Instance != null) SoundManager.Instance.BgmChange("BossBattle");
             BossPanel.gameObject.SetActive(true);
         }
         else

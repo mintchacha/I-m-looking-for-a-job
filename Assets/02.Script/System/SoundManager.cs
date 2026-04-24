@@ -89,7 +89,7 @@ public class SoundManager : MonoBehaviour
         sfxSource.volume = value;
 
         // 반복재생사운드
-        if(sfxTime.Count > 0 && sfxQueue.Count > 1) SfxRepeat();
+        if(sfxTime.Count > 0 && sfxQueue.Count > 0) SfxRepeat();
     }
 
     void BgmPlay(Scene scene, LoadSceneMode mode)
@@ -97,9 +97,8 @@ public class SoundManager : MonoBehaviour
 
         if (volumSlider == null || bgmSource == null || sfxSource == null) return;
 
-        //string currentScene = SceneManager.GetActiveScene().name;
         string currentScene = SceneController.currentScene;
-
+        //string currentScene = SceneManager.GetActiveScene().name;        
 
         if (bgmDictionary.TryGetValue(currentScene, out AudioClip audio))
         {
@@ -108,6 +107,23 @@ public class SoundManager : MonoBehaviour
         else
         {
             Debug.Log($"[SoundManager] 해당 Scene에 bgmClip이 없습니다 현재 씬 : {currentScene}");
+            return;
+        }
+
+        bgmSource.Play();
+    }
+    public void BgmChange(String bgmName)
+    {
+
+        if (volumSlider == null || bgmSource == null || sfxSource == null) return;
+
+        if (bgmDictionary.TryGetValue(bgmName, out AudioClip audio))
+        {
+            bgmSource.clip = audio;
+        }
+        else
+        {
+            Debug.Log($"[SoundManager] 해당 Scene에 bgmClip이 없습니다 현재 씬 : {bgmName}");
             return;
         }
 
@@ -136,27 +152,24 @@ public class SoundManager : MonoBehaviour
     }
     public void SfxRepeatSet(string audioName, int count, float timing)
     {
+        sfxTime.Clear();
+        repeat = 0;
+
         for (int i = 0; i < count; i++) 
         {
             sfxTime.Add(timing * i);
             sfxQueue.Enqueue(audioName);
         }
+
         lastTime = Time.time;
     }
     void SfxRepeat()
     {
-
         if (Time.time > lastTime + sfxTime[repeat])
         {
             string sfx = sfxQueue.Dequeue();
             SfxPlay(sfx);
-            repeat++;
-        }
-
-
-        if (sfxQueue.Count > 0)
-        {
-            sfxTime.Clear();
-        }        
+            repeat++;            
+        }    
     }
 }

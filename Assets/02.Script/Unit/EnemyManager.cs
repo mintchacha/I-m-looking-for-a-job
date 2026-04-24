@@ -67,12 +67,6 @@ public class EnemyManager : MonoBehaviour
             // 공격상태이며 공격시간끝나고 범위 밖에 있을시 
             unitState.SetUnitState(UNITSTATE.IDLE);
         }
-        if (unitState.state == UNITSTATE.DIE)
-        {
-            //RewardManager.Instance.IncreseScore(unitStat.score);
-            if (RewardManager.Instance == null) return;
-            RewardManager.Instance.IncreseScore(1);
-        }
     }
 
     void EnemyAttack()

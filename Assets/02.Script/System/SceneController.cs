@@ -8,21 +8,11 @@ public class SceneController : MonoBehaviour
     [Header("Stage 목록 설정")]
     [SerializeField] string[] stageCatalog;
     // 현재 씬 종류 출력 임시로 로비 설정
-    public static string currentScene = "Lobby";
+    public static string currentScene = "Title";
 
     private void Awake()
     {
-        Debug.Log("[SceneController] 처음 씬 종류 임시로 로비 설정");
-        if (Instance != null && Instance != this) 
-        {
-            Debug.Log("11");
-            Destroy(gameObject);
-            return;
-        }
-        
-
         Instance = this;    
-        DontDestroyOnLoad(gameObject);
 
         if (stageCatalog.Length == 0)
         {
@@ -45,7 +35,9 @@ public class SceneController : MonoBehaviour
         }
 
         if (SceneExists(sceneName)) SceneManager.LoadScene(sceneName);
-        SoundManager.Instance.SfxStop();
+        
+        if(SoundManager.Instance != null) SoundManager.Instance.SfxStop();
+
 
     }
     private bool SceneExists(string sceneName)

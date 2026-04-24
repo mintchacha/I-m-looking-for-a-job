@@ -81,7 +81,11 @@ public class UnitHealth : MonoBehaviour, IDamageable
         {
             if (WaveManager.Instance == null) return;
             WaveManager.Instance.DecreaseStayEnemy();
-            PlayerStat.SpecialEnergeChange(20); 
+            PlayerStat.SpecialEnergeChange(20);
+
+            //RewardManager.Instance.IncreseScore(unitStat.score);
+            if (RewardManager.Instance == null) return;
+            RewardManager.Instance.IncreseScore(1);            
         }
     }
 

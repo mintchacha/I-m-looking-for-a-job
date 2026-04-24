@@ -44,3 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06844a8c603a97a44b58a58152a04278, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneController
+  stageCatalog:
+  - Hallway
+  - Outdoor
