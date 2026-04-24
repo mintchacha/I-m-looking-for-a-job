@@ -460,7 +460,7 @@ MonoBehaviour:
   unitstate: {fileID: 5130326739878440016}
   currentHealth: 0
   damageDelay: 0
-  damageStay: 1
+  damageStay: 0.2
   debugMode: 0
 --- !u!114 &4465524504740688362
 MonoBehaviour:
@@ -474,6 +474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be4381b19dda5794892b3bf05e7f69ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitStat
+  category: 1
   health: {fileID: 7328812735600666274}
   statData:
     name: EliteEnemy
@@ -516,3 +517,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UnitState
   direction: 0
   state: 0
+  spcialState: 0

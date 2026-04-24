@@ -15,7 +15,7 @@ public class PlayerMove2D : MonoBehaviour
     [Header("점프력")]
     public float jumpForce = 15f;
 
-    bool isGrounded;
+    public bool isGrounded { get; private set;}
 
     [SerializeField] bool debugMode = false;
 
@@ -81,8 +81,8 @@ public class PlayerMove2D : MonoBehaviour
     // 방향 업데이트
     void UpdateDirection()
     {
-        // 공격중, 사망시엔 방향변경금지 
-        if (BattleManager.isAttack || unitState.state == UNITSTATE.DIE || unitState.state == UNITSTATE.SPECIALATTACK) return;
+        //공격중, 사망시엔 방향변경금지 
+        if (unitState.state == UNITSTATE.ATTACK || unitState.state == UNITSTATE.DIE || unitState.state == UNITSTATE.SPECIALATTACK) return;
 
         if (inputReader.MoveVector.x > 0.1f)
         {
@@ -102,17 +102,12 @@ public class PlayerMove2D : MonoBehaviour
         if (unitState.state == UNITSTATE.DIE) return;       
         if (unitState.state == UNITSTATE.SPECIALATTACK) return;       
 
-        if (!isGrounded)
-        {
-            unitState.SetUnitState(UNITSTATE.JUMP);
-            return;
-        }
-        // 공격중 아닐 시에 적용
-        if (unitState.state != UNITSTATE.ATTACK && inputReader.MoveVector == Vector2.zero)
+        // 땅에붙어있고 공격중 아닐 시에 적용
+        if (isGrounded && unitState.state != UNITSTATE.ATTACK && inputReader.MoveVector == Vector2.zero)
         {
             unitState.SetUnitState(UNITSTATE.IDLE);
         }
-        else if (unitState.state != UNITSTATE.ATTACK && inputReader.MoveVector != Vector2.zero)
+        else if (isGrounded && unitState.state != UNITSTATE.ATTACK && inputReader.MoveVector != Vector2.zero)
         {
             unitState.SetUnitState(UNITSTATE.MOVE);
         }
@@ -126,7 +121,8 @@ public class PlayerMove2D : MonoBehaviour
         BattleManager.SetAttackReset(); // 점프하면 공격상태 해제
         
         if (!isGrounded) return;
-        playerRb.AddForceY(jumpForce, ForceMode2D.Impulse);
         isGrounded = false;
+        unitState.SetUnitState(UNITSTATE.JUMP);
+        playerRb.AddForceY(jumpForce, ForceMode2D.Impulse);
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class PanelFadeAnim : MonoBehaviour
 {
     private Image panel;
-    [SerializeField] private float duration = 3;
+    [SerializeField] private float duration;
 
     private float timer;
     private bool isAnimating;
@@ -25,7 +25,7 @@ public class PanelFadeAnim : MonoBehaviour
     private void OnEnable()
     {
         panel.color = startColor;
-        Animation();
+        AnimSet();
     }
 
     private void Update()
@@ -46,6 +46,7 @@ public class PanelFadeAnim : MonoBehaviour
         if (t >= 1f)
         {
             isAnimating = false;
+            blinkCount--;
         }
         
     }
@@ -54,7 +55,6 @@ public class PanelFadeAnim : MonoBehaviour
     {
         timer = 0f;
         isAnimating = true;
-        blinkCount--;
         if (blinkCount == 0)
         {
             gameObject.SetActive(false);

@@ -78,8 +78,8 @@ public class WaveManager : MonoBehaviour
     void NextWaveSetting()
     {
         waveCount++;
-        // 웨이브 카운트가 0부터 시작하니까 waveList-1과 같아지면 게임 정지
-        if (waveCount >= waveList.Count - 1)
+        // 웨이브 카운트가 0부터 시작하니까 waveList 카운트와 같아지면 비어있는 리스트라 게임 정지
+        if (waveCount >= waveList.Count)
         {
             RewardManager.Instance.SpawnRewardUI();
             return;
@@ -98,8 +98,8 @@ public class WaveManager : MonoBehaviour
         if (isBoss)
         {
             // 보스 경보
+            SoundManager.Instance.SfxRepeatSet("BossRoom", 3, 1f);
             BossPanel.gameObject.SetActive(true);
-            BossPanel.AnimSet();
         }
         else
         {

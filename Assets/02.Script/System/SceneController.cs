@@ -15,6 +15,7 @@ public class SceneController : MonoBehaviour
         Debug.Log("[SceneController] 처음 씬 종류 임시로 로비 설정");
         if (Instance != null && Instance != this) 
         {
+            Debug.Log("11");
             Destroy(gameObject);
             return;
         }

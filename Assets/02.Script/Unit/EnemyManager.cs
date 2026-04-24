@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -26,7 +27,6 @@ public class EnemyManager : MonoBehaviour
     public float attckDistance = 0.3f;
     public Action AttackTrigger;
 
-    bool isDie = false;
     //[SerializeField] bool debugMode = true;
 
     private void Awake()
@@ -59,7 +59,7 @@ public class EnemyManager : MonoBehaviour
     private void Update()
     {
         // 공격 범위 안에 들어오고, 공격 쿨타임이 경과했을때 공격 실행
-        if (attackRange.isAttack && Time.time > lastAttackTime + attackCoolDown)
+        if (unitState.state != UNITSTATE.DAMAGED && attackRange.isAttack && Time.time > lastAttackTime + attackCoolDown)
         {
             EnemyAttack();
         } else if (unitState.state == UNITSTATE.ATTACK && !attackRange.isAttack && Time.time > lastAttackTime + attckDuration)
@@ -67,11 +67,11 @@ public class EnemyManager : MonoBehaviour
             // 공격상태이며 공격시간끝나고 범위 밖에 있을시 
             unitState.SetUnitState(UNITSTATE.IDLE);
         }
-        if (unitState.state == UNITSTATE.DIE && !isDie)
+        if (unitState.state == UNITSTATE.DIE)
         {
             //RewardManager.Instance.IncreseScore(unitStat.score);
+            if (RewardManager.Instance == null) return;
             RewardManager.Instance.IncreseScore(1);
-            isDie = true;
         }
     }
 

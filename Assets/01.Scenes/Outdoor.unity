@@ -1700,58 +1700,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1 &294238390
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 294238392}
-  - component: {fileID: 294238391}
-  m_Layer: 0
-  m_Name: RewardManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &294238391
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 294238390}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf2374b059cd19c4496e8e1d79b07810, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RewardManager
-  rewardUI: {fileID: 990097146}
-  playerState: {fileID: 7827591623859524830}
-  rankScore: 05000000080000000c000000
-  rankSprite:
-  - {fileID: 925949241, guid: a9b4bd72e9499ed4bb3c24881c89d39b, type: 3}
-  - {fileID: -1569159142, guid: 38aaaa7cdbcb66843a1f9ee7af5de4d0, type: 3}
-  - {fileID: -646869928, guid: 47b5c5435bf93164dba6ba58fb3074cc, type: 3}
-  - {fileID: 462218644, guid: 63693a09ab77b2d4196c8342db0d9ac5, type: 3}
---- !u!4 &294238392
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 294238390}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.70765, y: -0.08136, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -6488,6 +6436,71 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1542366617}
   m_CullTransparentMesh: 1
+--- !u!1001 &1568985316
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 799505955389197819, guid: 33c8bf74371a1914eab84e3a61f555af, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -15.40564
+      objectReference: {fileID: 0}
+    - target: {fileID: 799505955389197819, guid: 33c8bf74371a1914eab84e3a61f555af, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.93611
+      objectReference: {fileID: 0}
+    - target: {fileID: 799505955389197819, guid: 33c8bf74371a1914eab84e3a61f555af, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 799505955389197819, guid: 33c8bf74371a1914eab84e3a61f555af, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 799505955389197819, guid: 33c8bf74371a1914eab84e3a61f555af, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 799505955389197819, guid: 33c8bf74371a1914eab84e3a61f555af, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 799505955389197819, guid: 33c8bf74371a1914eab84e3a61f555af, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 799505955389197819, guid: 33c8bf74371a1914eab84e3a61f555af, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 799505955389197819, guid: 33c8bf74371a1914eab84e3a61f555af, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 799505955389197819, guid: 33c8bf74371a1914eab84e3a61f555af, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1507697215573063254, guid: 33c8bf74371a1914eab84e3a61f555af, type: 3}
+      propertyPath: rewardUI
+      value: 
+      objectReference: {fileID: 990097146}
+    - target: {fileID: 1507697215573063254, guid: 33c8bf74371a1914eab84e3a61f555af, type: 3}
+      propertyPath: playerState
+      value: 
+      objectReference: {fileID: 7827591623859524830}
+    - target: {fileID: 6602175487856715436, guid: 33c8bf74371a1914eab84e3a61f555af, type: 3}
+      propertyPath: m_Name
+      value: RewardManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 33c8bf74371a1914eab84e3a61f555af, type: 3}
 --- !u!1 &1621322740
 GameObject:
   m_ObjectHideFlags: 0
@@ -10021,6 +10034,6 @@ SceneRoots:
   - {fileID: 6873088}
   - {fileID: 990097145}
   - {fileID: 1880091573}
-  - {fileID: 294238392}
+  - {fileID: 1568985316}
   - {fileID: 2057553685}
   - {fileID: 82132182}

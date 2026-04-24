@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using Unity.Jobs;
 using UnityEngine;
+using UnityEngine.InputSystem;
 // 기본 공격 매니저.
 public class BattleManager : MonoBehaviour
 {
@@ -8,18 +10,14 @@ public class BattleManager : MonoBehaviour
     [SerializeField] PlayerStat playerStat;
     [SerializeField] UnitState playerState;
     [Header("히트박스 종류")]
-    [SerializeField] HitBox hitBox;
     GameObject owner;
     // 공격키 입력횟수 콤보  시스템 구현을 위한 큐
     static Queue<int> commandQueue = new Queue<int>();
     static float lastAttackTime = -9999f;
 
-    [Header("공격 적용 거리")]
-    public float attckDistance;
     float inputAttackKeyTime = 0.5f; // 공격키 입력 허용 시간
 
-    [Header("공격중 여부")]
-    public static bool isAttack;
+    public static bool isAttackParam;
     bool fullCombo = false;
     // 입력시마다 대기열에 넣을 값
     static int attackCount = 1;
@@ -40,60 +38,77 @@ public class BattleManager : MonoBehaviour
             Debug.Log("[BattleManager] PlayerStat이 할당되지 않음");
             return;
         }
-        if (hitBox == null)
-        {
-            Debug.Log("[BattleManager] hitBox가 할당되지 않음");
-            return;
-        }
         if (playerState == null)
         {
             Debug.Log("[BattleManager] UnitState가 할당되지 않음");
             return;
         }
     }
-    private void Start()
-    {
-        attckDistance = playerStat.defaultAttack.attckDistance;
-    }
 
     private void Update()
     {
         // 사망중 상태면 작동x
         if (playerState.state == UNITSTATE.DIE) return;
-        //공격중인지 여부는 마지막 공격 후, 키입력 허용시간 동안 지속
-        if (Time.time < lastAttackTime + inputAttackKeyTime)
+
+        // 공격 관련 상태일때 true 
+        if (playerState.state == UNITSTATE.JUMPATTACK || playerState.state == UNITSTATE.ATTACK)
         {
-            playerState.SetUnitState(UNITSTATE.ATTACK);
-        } else if (playerState.state == UNITSTATE.ATTACK && Time.time > lastAttackTime + inputAttackKeyTime)
+            isAttackParam = true;
+        }
+        else 
         {
-            // 공격상태에서 시간경과하면 상태 돌리기 (공격상태에서만 작동해야함 아니면 무한 덮어씌워짐)            
+            isAttackParam = false;
+        }
+
+
+        // 점프상태일때나 점프공격안했을때 실행
+        if (playerState.state == UNITSTATE.JUMP && playerState.state != UNITSTATE.JUMPATTACK)
+        {
+            JumpAttackManager();
+            return;
+        }
+        else if (playerState.state != UNITSTATE.JUMP && playerState.state != UNITSTATE.JUMPATTACK)
+        {
+            // 점프나 점프공격 아닐때 실행
+            DefaultAttackManager(playerState.state == UNITSTATE.ATTACK);
+        }
+        // 공격상태에서 시간경과하면 상태 돌리기 (공격상태에서만 작동해야함 아니면 무한 덮어씌워짐)  
+        if (playerState.state == UNITSTATE.ATTACK && Time.time > lastAttackTime + inputAttackKeyTime)
+        {
             playerState.SetUnitState(UNITSTATE.IDLE);
         }
-            isAttack = playerState.state == UNITSTATE.ATTACK;
-        // 기본공격 매니저 실행 사망 혹은 점프 아닐때
-        if (playerState.state != UNITSTATE.JUMP) DefaultAttackManager(isAttack);
+    }
+
+    void JumpAttackManager()
+    {
+        if (playerinput.attackPressed)
+        {
+            playerinput.ResetAttack();
+            playerState.SetUnitState(UNITSTATE.JUMPATTACK);
+            spawnJumpHitBox();
+        }
     }
 
     void DefaultAttackManager(bool isAttack)
     {
-        if (debugMode) Debug.Log("공격중 : " + isAttack);
-
         if (playerState.state != UNITSTATE.DIE && playerinput.attackPressed)
         {
-            // 공격키 입력 시 공격카운트 증가 콤보 허용 시간안에(0.5) 연속으로 입력하면 카운트 증가
-           if (!fullCombo && isAttack) attackCount++;
+            // 첫공격아닐때 허용 시간안에(0.5) 연속으로 입력하면 카운트 증가
+            if (!fullCombo && isAttack) attackCount++;
 
-            // 마지막공격했으면 키입력시간 경과되었을때부터 배열입력받기, 마지막 공격 아니면 그냥
+            // 풀콤보가 true이면 queue가 초기화 되기때문에 미리입력 더 안되게 추가 Enqueue막아야됨
+            // 공격시간경과하면 풀콤보 ture에 첫 공격이기 때문에  조건 걸어줌
             if (fullCombo && !isAttack)
             {
                 commandQueue.Enqueue(attackCount);
             }
-            else if(!fullCombo)
+            else if(!fullCombo) // 풀콤보 아니면 카운트 증가한게 들어간다
             {
                 commandQueue.Enqueue(attackCount);
             }
+            playerState.SetUnitState(UNITSTATE.ATTACK);
 
-                playerinput.ResetAttack();
+            playerinput.ResetAttack();
             if (debugMode) string.Join(",", commandQueue);
         }
 
@@ -122,14 +137,19 @@ public class BattleManager : MonoBehaviour
         {
             fullCombo = true;
             SetAttackReset();
-        }               
+        }
+    }
+    public static void SetAttackReset()
+    {
+        commandQueue.Clear();
+        attackCount = 1;
     }
 
     void spawnHitBox()
     {
-        float attackPositionX = transform.position.x + (playerState.direction == DIRECTION.RIGHT ? attckDistance : -attckDistance);
+        float attackPositionX = transform.position.x + (playerState.direction == DIRECTION.RIGHT ? playerStat.defaultAttack.attckDistance : - playerStat.defaultAttack.attckDistance);
         Vector2 spawnPosition = new Vector2(attackPositionX, transform.position.y);
-        HitBox spawn = Instantiate(hitBox, spawnPosition, Quaternion.identity);
+        HitBox spawn = Instantiate(playerStat.defaultAttack.hitBox, spawnPosition, Quaternion.identity);
 
         spawn.InitializeHitBox(
             playerStat.defaultAttack.colliderVerticalOffset,
@@ -139,9 +159,20 @@ public class BattleManager : MonoBehaviour
             gameObject
         );        
     }
-    public static void SetAttackReset()
+    void spawnJumpHitBox()
     {
-        commandQueue.Clear();
-        attackCount = 1;
+        float attackPositionX = transform.position.x + (playerState.direction == DIRECTION.RIGHT ? playerStat.defaultAttack.JumpVerticalAttckDistance : -playerStat.defaultAttack.JumpVerticalAttckDistance);
+        Vector2 spawnPosition = new Vector2(attackPositionX, transform.position.y);
+        FollowHitBox spawn = Instantiate(playerStat.defaultAttack.JumpHitBox, spawnPosition, Quaternion.identity);
+
+        spawn.InitializeHitBox(
+            playerStat.defaultAttack.JumpColliderVerticalOffset,
+            playerStat.defaultAttack.JumpColliderHorizontalOffset,
+            playerStat.statData.atk * playerStat.defaultAttack.damageMultiplier,
+            playerStat.defaultAttack.JumpVerticalAttckDistance,
+            playerStat.defaultAttack.JumpHorizontalAttckDistance,
+            playerState,
+            gameObject
+        );        
     }
 }

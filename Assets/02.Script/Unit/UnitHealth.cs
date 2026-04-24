@@ -75,10 +75,11 @@ public class UnitHealth : MonoBehaviour, IDamageable
     void UnitDie()
     {
         unitstate.SetUnitState(UNITSTATE.DIE);
-        //anim.OnDie();
+        //anim.OnDie(); STATE 변화시켜주기때문에 따로 넣을필요없을듯
         // 적이 죽으면 웨이브 카운트감소
         if (((1 << gameObject.layer) & LayerMask.GetMask("Enemy")) != 0) 
         {
+            if (WaveManager.Instance == null) return;
             WaveManager.Instance.DecreaseStayEnemy();
             PlayerStat.SpecialEnergeChange(20); 
         }

@@ -7,6 +7,7 @@ public class PlayerAnim : MonoBehaviour, IUnitAnim
     [SerializeField] PlayerInputReader inputReader;
     [SerializeField] UnitHealth unitHealth;
     [SerializeField] UnitState unitState;
+    [SerializeField] PlayerMove2D playerMove2D;
 
     Animator playerAnimator;
 
@@ -70,20 +71,20 @@ public class PlayerAnim : MonoBehaviour, IUnitAnim
 
     private void Update()
     {
-        animeDirection = unitState.direction == DIRECTION.LEFT ? 0f : 1f;        
-        animeJump = unitState.state == UNITSTATE.JUMP ? true : false;
+        animeDirection = unitState.direction == DIRECTION.LEFT ? 0f : 1f;    
         // 기본공격 여부
-        playerAnimator.SetBool(isAttackHash, BattleManager.isAttack);
+        playerAnimator.SetBool(isAttackHash, BattleManager.isAttackParam);
         playerAnimator.SetInteger(AttackComboHash, BattleManager.currentAttackCount);
         // 필살기
         playerAnimator.SetBool(isSpecialAttackHash, (unitState.state == UNITSTATE.SPECIALATTACK));
 
+        OnDie();
     }
 
     void LateUpdate()
     {
         playerAnimator.SetBool(isMovingHash, (unitState.state == UNITSTATE.MOVE));
-        playerAnimator.SetBool(isJumpHash, animeJump);
+        playerAnimator.SetBool(isJumpHash, !playerMove2D.isGrounded);
         playerAnimator.SetFloat(moveXHash, inputReader.MoveVector.x);
         playerAnimator.SetFloat(directionHash, animeDirection);
 

@@ -55,7 +55,7 @@ public class UnitAnim : MonoBehaviour, IUnitAnim
         unitAnim.SetFloat(unitDirectionHash, direction);
         unitAnim.SetBool(isMovingHash, (unitState.state == UNITSTATE.MOVE));
 
-        unitAnim.SetBool(dieTriggerHash, (unitState.state == UNITSTATE.DIE));
+        OnDie();
     }
 
     // TakeDamage 이벤트가 발생할 때마다 inputDamage를 true로 설정하는 메서드

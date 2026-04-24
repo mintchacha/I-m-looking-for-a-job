@@ -181,8 +181,8 @@ MonoBehaviour:
   health: {fileID: 8195069703805224816}
   statData:
     name: player
-    maxHealth: 40
-    atk: 5
+    maxHealth: 1
+    atk: 50
     atkSpeed: 0.2
   defaultAttack: {fileID: 7974123332926651855, guid: 12b1d93d415dc8e41a426375aac780dc, type: 3}
   specialAttack: {fileID: 3751191078360867379, guid: a67be793e229f2e41adb30d048ce1a97, type: 3}
@@ -219,8 +219,6 @@ MonoBehaviour:
   playerinput: {fileID: 4438677297011255341}
   playerStat: {fileID: 5796903631812428800}
   playerState: {fileID: 1594894459086518908}
-  hitBox: {fileID: 8981235920283491240, guid: 3ba2ffab4bed06e46ae915735adc5135, type: 3}
-  attckDistance: 0.4
   debugMode: 0
 --- !u!114 &1594894459086518908
 MonoBehaviour:
@@ -236,6 +234,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UnitState
   direction: 0
   state: 0
+  spcialState: 0
 --- !u!114 &3163114595951572921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,7 +251,6 @@ MonoBehaviour:
   playerStat: {fileID: 5796903631812428800}
   playerState: {fileID: 1594894459086518908}
   attckDistance: 0
-  debugMode: 0
 --- !u!1 &2472647858436668132
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,3 +381,4 @@ MonoBehaviour:
   inputReader: {fileID: 4438677297011255341}
   unitHealth: {fileID: 8195069703805224816}
   unitState: {fileID: 1594894459086518908}
+  playerMove2D: {fileID: 1712973047253127692}

@@ -28,7 +28,10 @@ public class HitBoxCircle : MonoBehaviour
             return;
         }
         isHit = true;
-        SoundManager.Instance.SfxPlay(sfxSoundName);
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.SfxPlay(sfxSoundName);
+        }
 
         if (!debugMode) Destroy(gameObject, 0.5f);
     }

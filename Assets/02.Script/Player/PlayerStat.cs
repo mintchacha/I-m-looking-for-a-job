@@ -31,6 +31,10 @@ public class PlayerStat : MonoBehaviour
         if(health == null) health = GetComponent<UnitHealth>();
         health.SetMaxHealth(statData.maxHealth);
     }
+    private void Start()
+    {
+        specialAttackEnerge = 0;
+    }
 
     private void Update()
     {

@@ -48,9 +48,15 @@ MonoBehaviour:
   id: 1
   damageMultiplier: 1
   maxComboCount: 3
+  hitBox: {fileID: 8981235920283491240, guid: 3ba2ffab4bed06e46ae915735adc5135, type: 3}
   attckDistance: 0.3
   colliderVerticalOffset: 1
   colliderHorizontalOffset: 0.5
+  JumpHitBox: {fileID: 4345427915571286978, guid: 79c42043ef75d5b4da0528eb0c30ad46, type: 3}
+  JumpVerticalAttckDistance: -0.5
+  JumpHorizontalAttckDistance: 0.5
+  JumpColliderVerticalOffset: 1
+  JumpColliderHorizontalOffset: 1
 --- !u!212 &3535972296955728833
 SpriteRenderer:
   serializedVersion: 2

@@ -81,7 +81,10 @@ public class HitBox : MonoBehaviour
             //if (target != null && !isHit)
             if (target != null)
             {
-                SoundManager.Instance.SfxPlay(sfxSoundName);
+                if (SoundManager.Instance != null)
+                {
+                    SoundManager.Instance.SfxPlay(sfxSoundName);
+                }
                 // 피격 시 스프라이트모션 활성화
                 isHit = true;
                 target.TakeDamage(damage);

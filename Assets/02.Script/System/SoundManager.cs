@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -28,6 +29,11 @@ public class SoundManager : MonoBehaviour
 
     [Header("볼륨")]
     [SerializeField] Slider volumSlider;
+
+    float lastTime = -999f;
+    int repeat = 0;
+    List<float> sfxTime = new List<float>();
+    Queue<String> sfxQueue = new Queue<String>();
 
 
     private void Awake()
@@ -81,6 +87,9 @@ public class SoundManager : MonoBehaviour
         float value = volumSlider.value;
         bgmSource.volume = value;
         sfxSource.volume = value;
+
+        // 반복재생사운드
+        if(sfxTime.Count > 0 && sfxQueue.Count > 1) SfxRepeat();
     }
 
     void BgmPlay(Scene scene, LoadSceneMode mode)
@@ -124,5 +133,30 @@ public class SoundManager : MonoBehaviour
             Debug.Log("[SoundManager] 해당하는 SFX가 없습니다.");
             return;
         }
+    }
+    public void SfxRepeatSet(string audioName, int count, float timing)
+    {
+        for (int i = 0; i < count; i++) 
+        {
+            sfxTime.Add(timing * i);
+            sfxQueue.Enqueue(audioName);
+        }
+        lastTime = Time.time;
+    }
+    void SfxRepeat()
+    {
+
+        if (Time.time > lastTime + sfxTime[repeat])
+        {
+            string sfx = sfxQueue.Dequeue();
+            SfxPlay(sfx);
+            repeat++;
+        }
+
+
+        if (sfxQueue.Count > 0)
+        {
+            sfxTime.Clear();
+        }        
     }
 }
