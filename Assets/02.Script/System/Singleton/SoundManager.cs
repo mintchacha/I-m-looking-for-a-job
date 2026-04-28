@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 [Serializable]
 public struct AudioFile
@@ -17,8 +15,9 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
 
-    AudioSource bgmSource;
-    AudioSource sfxSource;
+
+    public AudioSource bgmSource { get; private set; }
+    public AudioSource sfxSource { get; private set; }
     [Header("배경음악 세팅")]
     [SerializeField] List<AudioFile> bgmClip;
     Dictionary<string, AudioClip> bgmDictionary = new Dictionary<string, AudioClip>();
@@ -26,9 +25,6 @@ public class SoundManager : MonoBehaviour
     [Header("효과음 세팅")]
     [SerializeField] List<AudioFile> sfxClip;
     Dictionary<string, AudioClip> sfxDictionary = new Dictionary<string, AudioClip>();
-
-    [Header("볼륨")]
-    [SerializeField] Slider volumSlider;
 
     float lastTime = -999f;
     int repeat = 0;
@@ -38,11 +34,10 @@ public class SoundManager : MonoBehaviour
 
     private void Awake()
     {
-
-        if (Instance != null && Instance != this) 
+        if (Instance != null && Instance != this)
         {
-            Destroy(gameObject); 
-            return;            
+            Destroy(gameObject);
+            return;
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
@@ -57,11 +52,6 @@ public class SoundManager : MonoBehaviour
         if (bgmClip.Count == 0) 
         {
             Debug.Log("[SoundManager] AudioClip 설정 안되어있음");
-            return;
-        }
-        if (volumSlider == null) 
-        {
-            Debug.Log("[SoundManager] volumSlider 참조안됨");
             return;
         }
 
@@ -84,10 +74,6 @@ public class SoundManager : MonoBehaviour
     }
     private void Update()
     {
-        float value = volumSlider.value;
-        bgmSource.volume = value;
-        sfxSource.volume = value;
-
         // 반복재생사운드
         if(sfxTime.Count > 0 && sfxQueue.Count > 0) SfxRepeat();
     }
@@ -95,7 +81,7 @@ public class SoundManager : MonoBehaviour
     void BgmPlay(Scene scene, LoadSceneMode mode)
     {
 
-        if (volumSlider == null || bgmSource == null || sfxSource == null) return;
+        if (bgmSource == null || sfxSource == null) return;
 
         string currentScene = SceneController.currentScene;
         //string currentScene = SceneManager.GetActiveScene().name;        
@@ -109,16 +95,17 @@ public class SoundManager : MonoBehaviour
             Debug.Log($"[SoundManager] 해당 Scene에 bgmClip이 없습니다 현재 씬 : {currentScene}");
             return;
         }
-
+        Debug.Log(currentScene + "BGM 재생");
         bgmSource.Play();
     }
     public void BgmChange(String bgmName)
     {
 
-        if (volumSlider == null || bgmSource == null || sfxSource == null) return;
+        if (bgmSource == null || sfxSource == null) return;
 
         if (bgmDictionary.TryGetValue(bgmName, out AudioClip audio))
         {
+            bgmSource.Stop();
             bgmSource.clip = audio;
         }
         else
@@ -133,7 +120,7 @@ public class SoundManager : MonoBehaviour
     public void BgmStop() => bgmSource.Stop();
     public void SfxStop() => sfxSource.Stop();
 
-
+    public void SetBgmSource (float volume) => bgmSource.volume = volume;
 
 
     public void SfxPlay(string audioName)
@@ -153,7 +140,9 @@ public class SoundManager : MonoBehaviour
     public void SfxRepeatSet(string audioName, int count, float timing)
     {
         sfxTime.Clear();
+        sfxQueue.Clear();
         repeat = 0;
+        lastTime = -999f;
 
         for (int i = 0; i < count; i++) 
         {

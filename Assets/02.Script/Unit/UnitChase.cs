@@ -14,6 +14,19 @@ public class UnitChase : MonoBehaviour
 
     [SerializeField] bool debugMode = false;
 
+    private void Awake()
+    {
+        hitBoxCollider = GetComponent<BoxCollider2D>();
+        if (hitBoxCollider == null)
+        {
+            Debug.LogError($"[UnitMove2D] BoxCollider2D 컴포넌트가 할당되지 않음.");
+            return;
+        }
+        Vector2 size = hitBoxCollider.size;
+        size.y = verticalSize;
+        size.x = horizontalSize;
+        hitBoxCollider.size = size;
+    }
     private void Start()
     {
         isChasing = true;
@@ -52,17 +65,6 @@ public class UnitChase : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
-        hitBoxCollider = GetComponent<BoxCollider2D>();
-        if (hitBoxCollider == null)
-        {
-            Debug.LogError($"[UnitMove2D] BoxCollider2D 컴포넌트가 할당되지 않음.");
-            return;
-        }
-        Vector2 size = hitBoxCollider.size;
-        size.y = verticalSize;
-        size.x = horizontalSize;
-        hitBoxCollider.size = size;
-
         if (debugMode) GizmoDrow();
     }
 

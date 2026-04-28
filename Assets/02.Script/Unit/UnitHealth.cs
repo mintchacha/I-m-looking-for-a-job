@@ -41,7 +41,7 @@ public class UnitHealth : MonoBehaviour, IDamageable
     private void Update()
     {
         //피격 경직시간이후 다시 초기화
-        if(unitstate.state == UNITSTATE.DAMAGED && Time.time > lastDamegeTime + damageStay) unitstate.SetUnitState(UNITSTATE.IDLE);
+        if(unitstate.state == UNITSTATE.DAMAGED && Time.time > lastDamegeTime + damageStay) unitstate.SetUnitState(UNITSTATE.IDLE);        
 
         if (debugMode) Debug.Log((Time.time < lastDamegeTime + damageDelay) ? (lastDamegeTime + damageDelay) - Time.time : "피격무시 시간 종료");
     }
@@ -75,6 +75,7 @@ public class UnitHealth : MonoBehaviour, IDamageable
     void UnitDie()
     {
         unitstate.SetUnitState(UNITSTATE.DIE);
+        Debug.Log(gameObject + "의 상태 : " + unitstate);
         //anim.OnDie(); STATE 변화시켜주기때문에 따로 넣을필요없을듯
         // 적이 죽으면 웨이브 카운트감소
         if (((1 << gameObject.layer) & LayerMask.GetMask("Enemy")) != 0) 

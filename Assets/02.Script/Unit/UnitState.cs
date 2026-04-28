@@ -13,6 +13,6 @@ public class UnitState : MonoBehaviour
     }
     public void SetUnitState(UNITSTATE state) 
     {
-        if (!spcialState) this.state = state;
+        if (!spcialState || state == UNITSTATE.DIE) this.state = state;
     }
 }

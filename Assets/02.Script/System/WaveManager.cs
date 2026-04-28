@@ -98,8 +98,8 @@ public class WaveManager : MonoBehaviour
         if (isBoss)
         {
             // 보스 경보
-            if(SoundManager.Instance != null) SoundManager.Instance.SfxRepeatSet("BossRoom", 3, 1f);
-            if(SoundManager.Instance != null) SoundManager.Instance.BgmChange("BossBattle");
+            if(SoundManager.Instance != null) SoundManager.Instance.SfxRepeatSet("BossRoom", 3, 1f);            
+            Invoke("BossBgmBind", 3f);
             BossPanel.gameObject.SetActive(true);
         }
         else
@@ -127,7 +127,7 @@ public class WaveManager : MonoBehaviour
                 currentWave.boss.spawn--;
                 isBoss = true;
             }
-            else if (currentWave.eliteEnemy.spawn > 0 && (i+1) % 9 == 0) // 10번째 마다 엘리트 입력 i+1은 0일때도 0%9 가 0 이기때문에
+            else if (currentWave.eliteEnemy.spawn > 0 && (i+1) % 10 == 0) // 10번째 마다 엘리트 입력 i+1은 0일때도 0%9 가 0 이기때문에
             {
                 // 10번째마다 엘리트 출현
                 if (currentWave.eliteEnemy.enemyPrefab == null) Debug.Log("엘리트 프리팹이 null 입니다.");
@@ -175,7 +175,10 @@ public class WaveManager : MonoBehaviour
         if (currentStayEnemy == 0) Invoke("NextWaveSetting", 2f);
     }
 
-
+    void BossBgmBind() 
+    {
+        if (SoundManager.Instance != null) SoundManager.Instance.BgmChange("BossBattle");
+    }
     
 
 }

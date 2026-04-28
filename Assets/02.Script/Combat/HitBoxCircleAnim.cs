@@ -25,4 +25,10 @@ public class HitBoxCircleAnim : MonoBehaviour
     {
         hitAnimator.SetBool(isHitHash, HiBox.isHit);
     }
+
+    public void OnDestory()
+    {
+        Destroy(gameObject);
+    }
+
 }

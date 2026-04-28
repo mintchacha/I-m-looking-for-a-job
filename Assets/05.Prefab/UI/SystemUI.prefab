@@ -669,6 +669,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4279925584180254017}
+  - component: {fileID: 6024742194770228491}
   m_Layer: 5
   m_Name: Volum
   m_TagString: Untagged
@@ -697,6 +698,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 67.35}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6024742194770228491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2557659712239349393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4e5491ef36deba4090b75b9889229b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VolumnController
+  slider: {fileID: 9061642664500981399}
 --- !u!1 &3111312552227215615
 GameObject:
   m_ObjectHideFlags: 0
@@ -1433,5 +1447,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e25113caefc2ce4e88231caa4786874, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonBinder
-  targetName: TItle
+  targetName: Title
   targetObject: {fileID: 0}

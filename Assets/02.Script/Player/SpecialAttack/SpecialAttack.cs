@@ -5,7 +5,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class SpecialAttack : MonoBehaviour
 {
-    Queue<GameObject> HitEnemyQueue = new Queue<GameObject>();
+    public Queue<GameObject> HitEnemyQueue = new Queue<GameObject>();
 
     public int id;
     public float damage;
@@ -17,6 +17,9 @@ public class SpecialAttack : MonoBehaviour
     [Header("피격 범위 설정")]
     public float radiusOffset;
 
+    // 테스트용 
+    int count = 0;
+
     private void Awake()
     {
         if (hitBox == null)
@@ -27,27 +30,30 @@ public class SpecialAttack : MonoBehaviour
     }
     public void Hit(GameObject enemy)
     {
-        HitEnemyQueue.Enqueue(enemy);
+        //HitEnemyQueue.Enqueue(enemy);
+        if (!HitEnemyQueue.Contains(enemy)) HitEnemyQueue.Enqueue(enemy);
 
         UnitHealth targetHealth = enemy.gameObject.GetComponent<UnitHealth>();
         UnitAnim targetAnim = enemy.gameObject.GetComponentInChildren<UnitAnim>();
         UnitState targetState = enemy.gameObject.GetComponent<UnitState>();
-        if (targetHealth != null || targetAnim != null || targetState != null)
-        {
-            Debug.Log($"{enemy}영역적중");
-            targetState.SetUnitState(UNITSTATE.DAMAGED);
-            targetState.spcialState = true;
-            targetAnim.OnStop();
-            Invoke("EffectEnd", duration);
-        }
-        else
+        if (targetHealth == null || targetAnim == null || targetState == null)
         {
             Debug.Log($"[SpecialAttack] {enemy.name}대상에 targetMove혹은 targetAnim 혹은 targetState 가 없습니다");
+            return;
         }
+        Debug.Log(HitEnemyQueue.Count + "명 맞음");
+        targetState.SetUnitState(UNITSTATE.DAMAGED);
+        targetState.spcialState = true;
+        targetAnim.OnStop();
+        Invoke("EffectEnd", duration);
+
     }
     public void EffectEnd()
     {        
         GameObject enemy = HitEnemyQueue.Dequeue();
+
+        Debug.Log(enemy + "(해제), 남은 해제 적" + HitEnemyQueue.Count);
+
         if (enemy == null) return;
 
         UnitHealth targetHealth = enemy.gameObject.GetComponent<UnitHealth>();

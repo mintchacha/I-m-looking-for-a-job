@@ -1,4 +1,5 @@
 using System.IO;
+using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,7 +9,7 @@ public class SceneController : MonoBehaviour
     [Header("Stage 목록 설정")]
     [SerializeField] string[] stageCatalog;
     // 현재 씬 종류 출력 임시로 로비 설정
-    public static string currentScene = "Title";
+    public static string currentScene;
 
     private void Awake()
     {
@@ -19,7 +20,8 @@ public class SceneController : MonoBehaviour
             Debug.Log("[SceneController] stageCatalog 설정 안되어있음");
             return;
         }
-    }
+        if (string.IsNullOrWhiteSpace(currentScene)) currentScene = "Title";
+    }    
 
     public void SceneChange(string sceneName)
     {

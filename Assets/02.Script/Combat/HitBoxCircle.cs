@@ -4,6 +4,7 @@ using UnityEngine;
 public class HitBoxCircle : MonoBehaviour
 {
     CircleCollider2D hitBoxCollider;
+    PlayerStat playerStat;
     Vector2 attackDirection;
     public bool isHit { get; private set; }
 
@@ -12,7 +13,6 @@ public class HitBoxCircle : MonoBehaviour
 
     public string sfxSoundName;
     float damage;
-
     float radius;
 
     [SerializeField] bool debugMode = true;
@@ -32,8 +32,6 @@ public class HitBoxCircle : MonoBehaviour
         {
             SoundManager.Instance.SfxPlay(sfxSoundName);
         }
-
-        if (!debugMode) Destroy(gameObject, 0.5f);
     }
 
     // TODO: 히트박스 초기화 설정
@@ -58,6 +56,14 @@ public class HitBoxCircle : MonoBehaviour
 
         // instance 하고 initialize 에서 값 받아오니까 awake나 OnEnable 에서 설정하면 안됨.        
         hitBoxCollider.radius = radius;
+
+        playerStat = owner.GetComponent<PlayerStat>();
+        if (playerStat == null) 
+        {
+            Debug.LogError("[HitBox] playerStat가 존재하지 않습니다.");
+            return;
+        }
+        playerStat.specialAttack.HitEnemyQueue.Clear();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -65,8 +71,7 @@ public class HitBoxCircle : MonoBehaviour
         if (collision.gameObject == owner) return;
 
         if (((1 << collision.gameObject.layer) & targetLayer) != 0) {
-            Debug.Log("영역적중");
-            owner.GetComponent<PlayerStat>().specialAttack.Hit(collision.gameObject);
+            playerStat.specialAttack.Hit(collision.gameObject);
         }
 
     }

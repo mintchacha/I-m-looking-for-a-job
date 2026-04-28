@@ -94,6 +94,7 @@ MonoBehaviour:
   enemyManager: {fileID: 8990816908368746075}
   horizontalAttackRange: 1
   verticalAttackRange: 1.5
+  offsetX: 0
   targetLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -191,7 +192,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UnitChase
   player: {fileID: 0}
   verticalSize: 1.5
-  horizontalSize: 0.7
+  horizontalSize: 0.3
   debugMode: 0
 --- !u!1 &5967761502370868408
 GameObject:
@@ -444,6 +445,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UnitMove2D
   unitChase: {fileID: 266741349011914750}
   unitState: {fileID: 5130326739878440016}
+  attackRange: {fileID: 1805111068025425520}
   moveSpeed: 1
 --- !u!114 &7328812735600666274
 MonoBehaviour:

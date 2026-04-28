@@ -12,6 +12,10 @@ public class PanelFadeAnim : MonoBehaviour
     [SerializeField] Color endColor;
 
     public int blinkCount;
+    public int CurrentblinkCount;
+
+    [Header("종료후 유지 여부")]
+    public bool endForward;
 
     private void Awake()
     {
@@ -19,13 +23,20 @@ public class PanelFadeAnim : MonoBehaviour
         if (panel == null) 
         {
             Debug.Log($"[PanelFadeAnim] Image 참조 누락");
+            gameObject.SetActive(false);
             return;
         }
+        CurrentblinkCount = blinkCount;
     }
     private void OnEnable()
     {
         panel.color = startColor;
         AnimSet();
+    }
+    private void OnDisable()
+    {
+        CancelInvoke("AnimSet");
+        isAnimating = false;
     }
 
     private void Update()
@@ -45,8 +56,14 @@ public class PanelFadeAnim : MonoBehaviour
 
         if (t >= 1f)
         {
-            isAnimating = false;
-            blinkCount--;
+            CurrentblinkCount--;
+            if (CurrentblinkCount <= 0)
+            {
+                isAnimating = false;
+                if(!endForward) gameObject.SetActive(false);
+                return;
+            }
+            AnimSet();
         }
         
     }
@@ -55,13 +72,5 @@ public class PanelFadeAnim : MonoBehaviour
     {
         timer = 0f;
         isAnimating = true;
-        if (blinkCount == 0)
-        {
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            Invoke("AnimSet", duration);
-        }
     }
 }

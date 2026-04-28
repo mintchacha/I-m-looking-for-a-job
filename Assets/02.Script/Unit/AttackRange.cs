@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Playables;
 using static UnityEngine.GraphicsBuffer;
 
 [RequireComponent(typeof(BoxCollider2D))]
@@ -7,19 +8,20 @@ public class AttackRange : MonoBehaviour
     BoxCollider2D attackCollider;
     [Header("배틀 컴포넌트")]
     [SerializeField] EnemyManager enemyManager;
+    UnitState unitstate;
 
-    [Header("공격 감지 거리")]
+    [Header("공격 감지 거리 offsetGizmo는 적용x")]
     public float horizontalAttackRange;
     public float verticalAttackRange;
+    public float offsetX;
+
+    Vector3 offset;
 
     [Header("공격 대상 설정")]
     [SerializeField] LayerMask targetLayer;
 
     [Header("디버깅모드")]
     [SerializeField] bool debugMode = false;
-
-    float verticalSize;
-    float horizontalSize;
 
     public bool isAttack { get; private set; }
 
@@ -30,10 +32,34 @@ public class AttackRange : MonoBehaviour
             Debug.Log("[AttackRange] EnemyManager 할당되지 않음");
             return;
         }
+        attackCollider = GetComponent<BoxCollider2D>();
+        if (attackCollider == null) 
+        {
+            Debug.Log("[AttackRange] attackCollider 할당되지 않음");
+            return;
+        }
+        unitstate = enemyManager.GetComponent<UnitState>();
+        if (unitstate == null)
+        {
+            Debug.Log("[AttackRange] unitstate 할당되지 않음");
+            return;
+        }
+
+        // 콜라이더 세팅
+        Vector2 size = attackCollider.size;
+        size.y = verticalAttackRange;
+        size.x = horizontalAttackRange;
+        attackCollider.size = size;
+        attackCollider.offset = offset;
     }
     private void Update()
     {
         if (debugMode) Debug.Log("적 공격범위 : " + isAttack);
+
+        float newOffset = unitstate.direction == DIRECTION.RIGHT ? Mathf.Abs(offsetX) : -Mathf.Abs(offsetX);
+        Vector3 offset = attackCollider.offset;
+        offset.x = newOffset;
+        attackCollider.offset = offset;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -65,23 +91,17 @@ public class AttackRange : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        verticalSize = verticalAttackRange;
-        horizontalSize = horizontalAttackRange;
-
-        if (attackCollider == null) attackCollider = GetComponent<BoxCollider2D>();
-
-        Vector2 size = attackCollider.size;
-        size.y = verticalSize;
-        size.x = horizontalSize;
-        attackCollider.size = size;
-
         if (debugMode) GizmoDrow();
     }
 
     void GizmoDrow()
     {
+        attackCollider = GetComponent<BoxCollider2D>();
+        Vector3 offset = attackCollider.offset;
+        offset.x = offsetX;
+
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position, new Vector2(horizontalSize * transform.lossyScale.x, verticalSize * transform.lossyScale.y));
+        Gizmos.DrawWireCube(transform.position + offset, new Vector2(horizontalAttackRange * transform.lossyScale.x, verticalAttackRange * transform.lossyScale.y));
 
     }
 }

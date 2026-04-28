@@ -6,6 +6,7 @@ public class UnitMove2D : MonoBehaviour
     Rigidbody2D unitRb;
     [SerializeField] UnitChase unitChase;
     [SerializeField] UnitState unitState;
+    [SerializeField] AttackRange attackRange;
 
     [Header("이동속도")]
     public float moveSpeed = 5f;
@@ -27,6 +28,10 @@ public class UnitMove2D : MonoBehaviour
             Debug.Log("[UnitMove2D] UnitState 할당되지 않음");
             return;
         }
+        if (attackRange == null) {
+            Debug.Log("[UnitMove2D] attackRange 할당되지 않음");
+            return;
+        }
     }
     private void Update()
     {
@@ -41,12 +46,15 @@ public class UnitMove2D : MonoBehaviour
 
     void UpdateDirection()
     {
+        // 공격범위거나  추적 시 이동 방어
+        //if (!unitChase.isChasing || attackRange.isAttack) 
         if (!unitChase.isChasing) 
         {
             moveVector = Vector2.zero;
             return;
         }
 
+        // 공격중에 방향전환방어
         if (unitState.state == UNITSTATE.ATTACK) return;
 
         if (unitChase.targetPosition.x > transform.position.x)

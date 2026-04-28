@@ -62,15 +62,18 @@ public class EnemyManager : MonoBehaviour
         if (unitState.state != UNITSTATE.DAMAGED && attackRange.isAttack && Time.time > lastAttackTime + attackCoolDown)
         {
             EnemyAttack();
-        } else if (unitState.state == UNITSTATE.ATTACK && !attackRange.isAttack && Time.time > lastAttackTime + attckDuration)
+        } else if (unitState.state == UNITSTATE.ATTACK && Time.time > lastAttackTime + attckDuration)
         {
-            // 공격상태이며 공격시간끝나고 범위 밖에 있을시 
+            // 공격상태이며 공격시간끝나고 
             unitState.SetUnitState(UNITSTATE.IDLE);
         }
     }
 
     void EnemyAttack()
     {
+        // 사망시엔 막기
+        if (unitState.state == UNITSTATE.DIE) return;
+
         AttackTrigger?.Invoke();
         unitState.SetUnitState(UNITSTATE.ATTACK);
         //spawnHitBox();
