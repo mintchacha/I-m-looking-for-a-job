@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 // WaveManager 에서 받아온 리스트 Queue에 담아서 스폰시키는용도
 public class EnemySpawner : MonoBehaviour
@@ -29,11 +28,17 @@ public class EnemySpawner : MonoBehaviour
             GameObject newEnemy = EnemyQueue.Dequeue();            
             Vector2 spawnPosition = new Vector2(transform.position.x, transform.position.y);
             GameObject enemy = Instantiate(newEnemy, spawnPosition, Quaternion.identity);
-            enemy.GetComponentInChildren<UnitChase>().Initialize(target);
+            UnitChase enemyChase = enemy.GetComponentInChildren<UnitChase>();
+            if (enemyChase == null) 
+            {
+                Debug.Log("[EnemySpawner] enemyChase를 찾을 수 없습니다.");
+                return;
+            }
+            enemyChase.Initialize(target);
 
             //스폰된 적 정보
-            UnitStat enemyStat = newEnemy.GetComponent<UnitStat>();
-            if (enemyStat == null) Debug.Log(enemy + "에 UnitStat를 찾을 수 없습니다.");
+            //UnitStat enemyStat = newEnemy.GetComponent<UnitStat>();
+            //if (enemyStat == null) Debug.Log(enemy + "에 UnitStat를 찾을 수 없습니다.");
             //if (enemyStat.name == "EliteEnemy") Debug.Log("엘리트 몬스터 등장!");
             //else { Debug.Log(enemyStat.name + "스폰"); }
 

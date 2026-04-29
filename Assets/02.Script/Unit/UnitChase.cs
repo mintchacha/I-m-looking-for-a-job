@@ -33,7 +33,7 @@ public class UnitChase : MonoBehaviour
     }
     private void Update()
     {
-        targetPosition = player.transform.position;
+        if(player != null) targetPosition = player.transform.position;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
