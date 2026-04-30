@@ -1,6 +1,8 @@
-# 🎮 Superpowered Job Seeker (초능력자 취준생)
+# 🎮 I'm looking for a job (초능력자 취준생)
+<img width="1536" height="1024" alt="ppttitle" src="https://github.com/user-attachments/assets/a481708a-135c-431d-867c-6381a48c1141" />
 
 > Unity 기반 2D 횡스크롤 액션 로그라이트 게임\
+
 > 개인 프로젝트 (3주)
 
 ------------------------------------------------------------------------
@@ -105,7 +107,7 @@
 
 ------------------------------------------------------------------------
 
-## 🐞 Problem Solving
+## 🐞Troubleshooter
 
 ### 1. Tilemap Collider 충돌 문제
 
@@ -157,4 +159,4 @@
 
 ## 🎥 Demo
 
-(영상 링크 추가)
+[시연영상](https://drive.google.com/file/d/12YVdXwOhIojpuA-xAILOnsKDRCmMQBtT/view?usp=sharing)
