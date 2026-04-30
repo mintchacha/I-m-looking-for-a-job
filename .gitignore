@@ -9,3 +9,5 @@ UserSettings/
 .vsconfig
 *.csproj
 *.sln
+*.ttf
+*.otf
